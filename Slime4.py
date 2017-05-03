@@ -3,7 +3,6 @@
 Created on Wed May 03 14:03:42 2017
 @author: Fantasia
 """
-import classroom
 import random
 import pygame
 import math
@@ -11,9 +10,9 @@ class Unit:
     def __init__(self,c,state,c2,life):
         self.c=c#信息素浓度
         self.c2=c2
-        self.s=state#状态：0-空位 1-正细胞 2-物体 3-负细胞
+        self.s=state#状态：0-空位 1-生长细胞 2-物体 3-捕食细胞
         self.l=life#生命值
-class Ground(classroom.Classroom):
+class Ground:
     def __init__(self,n):
         self.ground=[]
         self.n=n
@@ -136,7 +135,7 @@ class Ground(classroom.Classroom):
                                 ny=y+j  
         self.move(x,y,nx,ny)
         self.nrelease(nx,ny)
-        self.ground[nx][ny].l-=2
+        self.ground[nx][ny].l-=1
         if self.ground[nx][ny].l<=0:
             self.die(nx,ny)
     def z(self,x,y):
