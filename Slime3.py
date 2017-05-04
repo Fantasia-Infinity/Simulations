@@ -1,10 +1,9 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Wed May 03 14:03:42 2017
-
 @author: Fantasia
 """
-import classroom
 import random
 import pygame
 import math
@@ -12,8 +11,8 @@ class Unit:
     def __init__(self,c,s,c2):
         self.c=c#信息素浓度
         self.c2=0
-        self.s=0#状态：0-空位 1-正细胞 2-物体 3-负细胞
-class Ground(classroom.Classroom):
+        self.s=0#状态：0-空位 1-普通细胞 2-物体 3-捕食细胞
+class Ground:
     def __init__(self,n):
         self.ground=[]
         self.n=n
@@ -222,4 +221,5 @@ while True:
     pygame.display.update()
         
         
+
 
