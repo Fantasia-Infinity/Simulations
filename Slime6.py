@@ -76,6 +76,7 @@ class Ground:
         thes=self.ground[x][y].s
         thel=self.ground[x][y].l
         self.ground[x][y].s=0
+        self.ground[x][y].l=0
         x=nx
         y=ny
         self.ground[x][y].s=thes
@@ -97,8 +98,11 @@ class Ground:
                     if self.inrange(x+i,y+j):
                         nc=self.ground[x+i][y+j].c
                         nc2=self.ground[x+i][y+j].c2
-                        if self.ground[x+i][y+j].s!=0:#如果不是空位就计数
-                            count+=1
+                        if self.ground[x+i][y+j].s!=0:#如果不是空位且为1就计数
+                            if self.ground[x+i][y+j].s==1:
+                                count+=1
+                            else:
+                                pass
                         elif self.ground[x+i][y+j].s==0:#如果周围某一个是空位：
                             if self.ground[x][y].l>=100:#如果生命值满了有能力：1、分裂 2、产生护甲
                                 if self.ground[x+i][y+j].c2>0.0001:#如果信息素c2浓度超过就产生护甲
@@ -242,18 +246,18 @@ class Ground:
         for i in l1:#因并不是严格的并行更新 所以打乱更新顺序防止瞬移的bug
             for j in l2:
                 self.uppergroundunit(i,j)
-n=80
+n=50
 g=Ground(n)
 g.randinit()
-#for i in range(500):
-#    g.addslime(random.randint(0,g.n-1),random.randint(0,g.n-1))
+for i in range(500):
+    g.addslime(random.randint(0,g.n-1),random.randint(0,g.n-1))
 g.addslime(25,25)
 BLUE=(0,0,255)
 BLACK=(0,0,0)
 YELLOW=(0,255,0)
 RED=(255,0,0)
 ge=6
-#g.addpredator(random.randint(0,g.n-1),random.randint(0,g.n-1))
+g.addpredator(random.randint(0,g.n-1),random.randint(0,g.n-1))
 def drawone(i,j,c):
     if c.ground[i][j].s==0:
         pygame.draw.rect(dissurf,BLACK,(i*ge,j*ge,ge-2,ge-2))
