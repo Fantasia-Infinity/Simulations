@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed May 03 14:03:42 2017
+
 @author: Fantasia
 """
 import random
@@ -135,7 +136,7 @@ class Ground:
         nx=x
         ny=y
         mc=self.ground[x][y].c#按照自己/对方的信息素浓度梯度移动
-        for f in self.fl:
+        for f in self.fl:#可以直接穿过边界到另一边 细胞和信息素都是
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
             if self.ground[x+i][y+j].s==1:
