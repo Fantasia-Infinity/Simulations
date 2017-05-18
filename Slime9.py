@@ -66,8 +66,7 @@ class Ground:
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
             if self.inrange(x+i,y+j):
-                if not (i==j and i==0):
-                    self.addc(x+i,y+j,dc)
+                self.addc(x+i,y+j,dc)
     def release3(self,x,y):
         sc=self.ground[x][y].c2####
         k=0.1
@@ -79,8 +78,7 @@ class Ground:
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
             if self.inrange(x+i,y+j):
-                if not (i==j and i==0):
-                    self.addc3(x+i,y+j,dc)
+                self.addc3(x+i,y+j,dc)
     def nrelease(self,x,y):
         sc=self.ground[x][y].c#根据要捕食的细胞/自己的信息素浓度施放自己的信息素
         k=0.9
@@ -92,8 +90,7 @@ class Ground:
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
             if self.inrange(x+i,y+j):
-                if not (i==j and i==0):
-                    self.addc2((x+i),(y+j),dc)
+                self.addc2((x+i),(y+j),dc)
     def move(self,x,y,nx,ny):
         thes=self.ground[x][y].s
         thel=self.ground[x][y].l
@@ -120,42 +117,41 @@ class Ground:
         for f in self.fl:
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
-            if self.inrange(x+i,y+j):
-                nc=self.ground[x+i][y+j].c
-                nc2=self.ground[x+i][y+j].c2
-                nc3=self.ground[x+i][y+j].c3
-                if self.ground[x+i][y+j].s!=0:#如果不是空位且为1就计数
-                    if self.ground[x+i][y+j].s==1 or self.ground[x+i][y+j].s==4:
-                        count+=1
-                    else:
+            nc=self.ground[x+i][y+j].c
+            nc2=self.ground[x+i][y+j].c2
+            nc3=self.ground[x+i][y+j].c3
+            if self.ground[x+i][y+j].s!=0:#如果不是空位且为1就计数
+                if self.ground[x+i][y+j].s==1 or self.ground[x+i][y+j].s==4:
+                    count+=1
+                else:
+                    pass
+            elif self.ground[x+i][y+j].s==0:#如果周围某一个是空位：
+                if self.ground[x][y].l>=100:#如果生命值满了有能力：1、分裂 2、产生护甲
+                    if self.ground[x+i][y+j].c2>0.00001:#如果信息素c2浓度超过就产生护甲
+                        self.ground[x+i][y+j].s=4
+                        self.ground[x+i][y+j].l=10
+                    elif True:#self.ground[x+i][y+j].c3>0.0001:
+                        self.addslime(x+i,y+j)
+                        self.ground[x][y].l=50
+                    elif k1*nc+k3*nc3-k2*nc2<=totalmyc:
                         pass
-                elif self.ground[x+i][y+j].s==0:#如果周围某一个是空位：
-                    if self.ground[x][y].l>=100:#如果生命值满了有能力：1、分裂 2、产生护甲
-                        if self.ground[x+i][y+j].c2>0.00001:#如果信息素c2浓度超过就产生护甲
-                            self.ground[x+i][y+j].s=4
-                            self.ground[x+i][y+j].l=10
-                        elif True:#self.ground[x+i][y+j].c3>0.0001:
-                            self.addslime(x+i,y+j)
-                            self.ground[x][y].l=50
-                        elif k1*nc+k3*nc3-k2*nc2<=totalmyc:
-                            pass
-                        elif k1*nc+k3*nc3-k2*nc2>totalmyc:
-                            myc=self.ground[x+i][y+j].c
-                            myc2=self.ground[x+i][y+j].c2
-                            myc3=self.ground[x+i][y+j].c3
-                            totalmyc=k1*myc+k3*myc3-k2*myc2
-                            nx=x+i
-                            ny=y+j
-                    else:
-                        if k1*nc+k3*nc3-k2*nc2<=totalmyc:
-                            pass
-                        elif k1*nc+k3*nc3-k2*nc2>totalmyc:
-                            myc=self.ground[x+i][y+j].c
-                            myc2=self.ground[x+i][y+j].c2
-                            myc3=self.ground[x+i][y+j].c3
-                            totalmyc=k1*myc+k3*myc3-k2*myc2
-                            nx=x+i
-                            ny=y+j
+                    elif k1*nc+k3*nc3-k2*nc2>totalmyc:
+                        myc=self.ground[x+i][y+j].c
+                        myc2=self.ground[x+i][y+j].c2
+                        myc3=self.ground[x+i][y+j].c3
+                        totalmyc=k1*myc+k3*myc3-k2*myc2
+                        nx=x+i
+                        ny=y+j
+                else:
+                    if k1*nc+k3*nc3-k2*nc2<=totalmyc:
+                        pass
+                    elif k1*nc+k3*nc3-k2*nc2>totalmyc:
+                        myc=self.ground[x+i][y+j].c
+                        myc2=self.ground[x+i][y+j].c2
+                        myc3=self.ground[x+i][y+j].c3
+                        totalmyc=k1*myc+k3*myc3-k2*myc2
+                        nx=x+i
+                        ny=y+j
         if count==8:
             if self.ground[x][y].l>=100:
                 for f in self.fl:
@@ -184,43 +180,42 @@ class Ground:
         for f in self.fl:
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
-            if self.inrange(x+i,y+j):
-                nc=self.ground[x+i][y+j].c
-                nc2=self.ground[x+i][y+j].c2
-                nc3=self.ground[x+i][y+j].c3
+            nc=self.ground[x+i][y+j].c
+            nc2=self.ground[x+i][y+j].c2
+            nc3=self.ground[x+i][y+j].c3
 #                        if self.ground[x+i][y+j].s!=0:#如果不是空位且为1就计数
 #                            if self.ground[x+i][y+j].s==4 or self.ground[x+i][y+j].s==1:
 #                                count+=1
-                if self.ground[x+i][y+j].s==3:
-                    self.ground[x+i][y+j].s=4
-                    self.ground[x+i][y+j].l==50
-                elif self.ground[x+i][y+j].s==0:#如果周围某一个是空位：
-                    if self.ground[x][y].l>=100:#如果生命值满了有能力：1、分裂 2、产生护甲                               
-                        if self.ground[x+i][y+j].c2>0.01:#如果信息素c2浓度超过就产生护甲
-                            self.addglass(x+i,y+j)
+            if self.ground[x+i][y+j].s==3:
+                self.ground[x+i][y+j].s=4
+                self.ground[x+i][y+j].l==50
+            elif self.ground[x+i][y+j].s==0:#如果周围某一个是空位：
+                if self.ground[x][y].l>=100:#如果生命值满了有能力：1、分裂 2、产生护甲                               
+                    if self.ground[x+i][y+j].c2>0.01:#如果信息素c2浓度超过就产生护甲
+                        self.addglass(x+i,y+j)
 #                                elif True:#self.ground[x+i][y+j].c>0.0001:#并且对方信息素足够多才能分裂
 #                                    self.addslime3(x+i,y+j)
 #                                    self.ground[x][y].l=50
-                            
-                        elif k1*nc+k3*nc3+k2*nc2<=totalmyc:#
-                            pass
-                        elif k1*nc+k3*nc3+k2*nc2>totalmyc:
-                            myc=self.ground[x+i][y+j].c
-                            myc2=self.ground[x+i][y+j].c2
-                            myc3=self.ground[x+i][y+j].c3
-                            totalmyc=k1*myc+k3*myc3-k2*myc2
-                            nx=x+i
-                            ny=y+j
-                    else:#生命值不满只有移动的选择
-                        if k1*nc+k3*nc3+k2*nc2<=totalmyc:
-                            pass
-                        elif k1*nc+k3*nc3+k2*nc2>totalmyc:
-                            myc=self.ground[x+i][y+j].c
-                            myc2=self.ground[x+i][y+j].c2
-                            myc3=self.ground[x+i][y+j].c3
-                            totalmyc=k1*myc+k3*myc3-k2*myc2
-                            nx=x+i
-                            ny=y+j
+                        
+                    elif k1*nc+k3*nc3+k2*nc2<=totalmyc:#
+                        pass
+                    elif k1*nc+k3*nc3+k2*nc2>totalmyc:
+                        myc=self.ground[x+i][y+j].c
+                        myc2=self.ground[x+i][y+j].c2
+                        myc3=self.ground[x+i][y+j].c3
+                        totalmyc=k1*myc+k3*myc3-k2*myc2
+                        nx=x+i
+                        ny=y+j
+                else:#生命值不满只有移动的选择
+                    if k1*nc+k3*nc3+k2*nc2<=totalmyc:
+                        pass
+                    elif k1*nc+k3*nc3+k2*nc2>totalmyc:
+                        myc=self.ground[x+i][y+j].c
+                        myc2=self.ground[x+i][y+j].c2
+                        myc3=self.ground[x+i][y+j].c3
+                        totalmyc=k1*myc+k3*myc3-k2*myc2
+                        nx=x+i
+                        ny=y+j
 #        if count==8:
 #            if self.ground[x][y].l>=100:
 #                for i in [-1,0,1]:
@@ -247,22 +242,21 @@ class Ground:
         for f in self.fl:
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
-            if self.inrange(x+i,y+j):
-                if self.ground[x+i][y+j].s==1: #or self.ground[x+i][y+j].s==4:
-                    self.ground[x+i][y+j].s=3
-                    self.ground[x+i][y+j].l=100
-                elif self.ground[x+i][y+j].s==0:
-                    nc=self.ground[x+i][y+j].c
-                    nc3=self.ground[x+i][y+j].c3
-                    netc=k1*nc+k3*nc3
-                    if mytc>=netc:#
-                        pass
-                    else:
-                        mc=nc#
-                        mc3=nc3
-                        mytc=netc
-                        nx=x+i
-                        ny=y+j  
+            if self.ground[x+i][y+j].s==1: #or self.ground[x+i][y+j].s==4:
+                self.ground[x+i][y+j].s=3
+                self.ground[x+i][y+j].l=100
+            elif self.ground[x+i][y+j].s==0:
+                nc=self.ground[x+i][y+j].c
+                nc3=self.ground[x+i][y+j].c3
+                netc=k1*nc+k3*nc3
+                if mytc>=netc:#
+                    pass
+                else:
+                    mc=nc#
+                    mc3=nc3
+                    mytc=netc
+                    nx=x+i
+                    ny=y+j  
         self.move(x,y,nx,ny)
         self.nrelease(nx,ny)
         self.ground[nx][ny].l-=1
