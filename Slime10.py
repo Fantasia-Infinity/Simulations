@@ -33,7 +33,7 @@ class Ground:
                 self.ground[i][j]=Unit(random.random(),0,0,0,0)
     def addslime(self,x,y):
         self.ground[x][y].s=1
-        self.ground[x][y].l=50#满100
+        self.ground[x][y].l=30#满100
     def addslime3(self,x,y):
         self.ground[x][y].s=4
         self.ground[x][y].l=50
@@ -130,6 +130,7 @@ class Ground:
                     if self.ground[x+i][y+j].c2>0.00001:#如果信息素c2浓度超过就产生护甲
                         self.ground[x+i][y+j].s=4
                         self.ground[x+i][y+j].l=10
+                        self.ground[x][y].l-=50
                     elif True:#self.ground[x+i][y+j].c3>0.0001:
                         self.addslime(x+i,y+j)
                         self.ground[x][y].l=50
@@ -160,9 +161,9 @@ class Ground:
 #                    if not (i==j and i==0):#如果生命值满且于内部就给周围加资源
 #                        if self.ground[x+i][y+j].s==1:
 #                            self.ground[x+i][y+j].l+=5#通过控制增加的资源数可以调控聚合体稳定后的大小
-#    #                self.die(x,y)#然后死亡
+##                    self.die(x,y)#然后死亡
         self.move(x,y,nx,ny)
-        self.ground[nx][ny].l+=1
+        self.ground[nx][ny].l+=4.9
         if self.ground[nx][ny].l>=100:
             self.ground[nx][ny].l=100
         self.release(nx,ny)
@@ -225,7 +226,7 @@ class Ground:
 #                                self.ground[x+i][y+j].l+=5#通过控制增加的资源数可以调控聚合体稳定后的大小
 #                self.die(x,y)#然后死亡
         self.move(x,y,nx,ny)
-        self.ground[nx][ny].l-=4
+        self.ground[nx][ny].l-=15
 #        if self.ground[nx][ny].l>=100:
 #            self.ground[nx][ny].l=100
         self.release3(nx,ny)
@@ -239,6 +240,7 @@ class Ground:
         k1=1.0
         k3=-7.0
         mytc=k1*mc+k3*mc3
+        count=0
         for f in self.fl:
             i=f(self,x,y)[0]-x
             j=f(self,x,y)[1]-y
@@ -246,7 +248,7 @@ class Ground:
                 self.ground[x+i][y+j].s=3
                 self.ground[x+i][y+j].l=100
             elif self.ground[x+i][y+j].s==0:
-                if mc3>=0.00001:
+                if mc3>=0.000001:
                     self.ground[x+i][y+j].s=2
                     self.ground[x+i][y+j].l=10
                 else:
@@ -260,10 +262,14 @@ class Ground:
                         mc3=nc3
                         mytc=netc
                         nx=x+i
-                        ny=y+j  
+                        ny=y+j
+                count+=1
+#        if mc3>0.000001 and count!=0:
+#            self.ground[x][y].s=2
+#            self.ground[x][y].l=10
         self.move(x,y,nx,ny)
         self.nrelease(nx,ny)
-        self.ground[nx][ny].l-=1
+        self.ground[nx][ny].l-=0.5
         if self.ground[nx][ny].l<=0:
             self.die(nx,ny)
     def upperglass(self,x,y):
@@ -378,13 +384,13 @@ class Ground:
         for i in l1:#因并不是严格的并行更新 所以打乱更新顺序防止瞬移的bug
             for j in l2:
                 self.uppergroundunit(i,j)
-n=50
+n=60
 g=Ground(n)
 g.randinit()
-for i in range(200):
+for i in range(300):
     g.addslime(random.randint(0,g.n-1),random.randint(0,g.n-1))
-#for i in range(200):
-#    g.addslime3(random.randint(0,g.n-1),random.randint(0,g.n-1))
+for i in range(10):
+    g.addpredator(random.randint(0,g.n-1),random.randint(0,g.n-1))
 g.addslime(25,25)
 BLUE=(0,0,255)
 BLACK=(0,0,0)
