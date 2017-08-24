@@ -10,6 +10,8 @@ import pygame
 import time
 def showstate(p):
     return p.state
+def showa(p):
+    return p.a
 class Cell:
     def __init__(self,x,y,pheromoneA,pheromoneB,state):
         self.state=state
@@ -23,7 +25,7 @@ class Skin(classroom.Classroom):
             for j in range(self.n):
                 self.a[i][j]=Cell(i,j,random.randint(0,10),random.randint(0,10),0.0)
     def upper(self,cell):
-        rateta=0.8
+        rateta=0.1
         ratetb=0.1
         ratera=0.2
         raterb=0.2
@@ -44,10 +46,10 @@ class Skin(classroom.Classroom):
         deltb-=cell.b*ratetb
 #        if deltb>255:
 #            deltb=255
-        s=delta-deltb
+        delts=cell.a-cell.b
         if abs(cell.state)>255:
-            s=0
-        return cell.a+delta,cell.b+deltb,cell.state+s
+            delts=0
+        return cell.a+delta,cell.b+deltb,cell.state+delts
     def update(self):
         newskin=Skin(self.n)
         newskin.setbeing()
@@ -57,12 +59,12 @@ class Skin(classroom.Classroom):
         self.a=newskin.a
     def show(self):
         for i in self.a:
-            print map(showstate,i) 
+            print map(showa,i) 
         return
-n=40
+n=60
 c=Skin(n)
 c.setbeing()
-ge=15
+ge=5
 BLUE=(0,0,255)
 BLACK=(0,0,0)
 #def drawone(i,j,c):
@@ -74,7 +76,7 @@ def drawone(i,j,c):
         s=255
     if s<0:
         s=0
-    pygame.draw.rect(dissurf,(s,s,s),(i*ge,j*ge,ge-5,ge-5))
+    pygame.draw.rect(dissurf,(s,s,s),(i*ge,j*ge,ge-1,ge-1))
 pygame.init()
 dissurf=pygame.display.set_mode((n*ge,n*ge))
 dissurf.fill(BLACK)
@@ -88,7 +90,9 @@ while True:
             drawone(i,j,c)
     pygame.display.update()
 
-
+#for i in range(10):
+#    c.update()
+#c.show()
     
         
         
