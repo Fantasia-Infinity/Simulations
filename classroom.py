@@ -103,42 +103,46 @@ class Classroom:
         return s
 
 
-c = Classroom(10)
+c = Classroom(7)
 c.setbegin()
-# i=0
-# while c.sumsound()>0:
-#    c.show()
-#    print i
-#    c.update()
-#    i+=1
-# def how(n):
-#    s=Classroom(n)
-#    s.setbegin()
-#    i=0
-#    while s.sumsound()>0:
-#        s.update()
-#        i+=1
-#    return i
-# BLUE=(0,0,255)
-# BLACK=(0,0,0)
-# ge=15
-# n=40
-# c=Classroom(n)
-# c.setbegin()
-# def drawone(i,j,c):
-#    if c.a[i][j].state!=0:
-#        pygame.draw.rect(dissurf,(0,0,c.a[i][j].state*2.5),(i*ge,j*ge,ge-5,ge-5))
-#    else:
-#        pygame.draw.rect(dissurf,BLACK,(i*ge,j*ge,ge-5,ge-5))
-# pygame.init()
-# dissurf=pygame.display.set_mode((n*ge,n*ge))
-# dissurf.fill(BLACK)
-# while True:
-#    for event in  pygame.event.get():
-#        if event.type==pygame.QUIT:
-#            pygame.quit()
-#    c.update()
-#    for i in range(n):
-#        for j in range(n):
-#            drawone(i,j,c)
-#    pygame.display.update()
+if __name__ == '__main__':
+    i = 0
+    while c.sumsound() > 0:
+        c.show()
+        print(i)
+        c.update()
+        i += 1
+
+    def how(n):
+        s = Classroom(n)
+        s.setbegin()
+        i = 0
+        while s.sumsound() > 0:
+            s.update()
+            i += 1
+        return i
+    BLUE = (0, 0, 255)
+    BLACK = (0, 0, 0)
+    ge = 15
+    n = 40
+    c = Classroom(n)
+    c.setbegin()
+
+    def drawone(i, j, c):
+        if c.a[i][j].state != 0:
+            pygame.draw.rect(
+                dissurf, (0, 0, c.a[i][j].state*2.5), (i*ge, j*ge, ge-5, ge-5))
+        else:
+            pygame.draw.rect(dissurf, BLACK, (i*ge, j*ge, ge-5, ge-5))
+    pygame.init()
+    dissurf = pygame.display.set_mode((n*ge, n*ge))
+    dissurf.fill(BLACK)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        c.update()
+        for i in range(n):
+            for j in range(n):
+                drawone(i, j, c)
+        pygame.display.update()
