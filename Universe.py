@@ -18,7 +18,7 @@ class Vec:
     def mulc(self,c):
         return Vec(self.x*c,self.y*c)
     def show(self):
-        print self.x,self.y
+        print(self.x,self.y)
 class Planet:
     def __init__(self,m,l,v,a):
         self.m=m
@@ -48,7 +48,7 @@ class Universe:
             self.upper(p)
     def show(self):
         for p in self.planets:
-            print p.l.x,p.l.y
+            print(p.l.x,p.l.y)
 ps=[Planet(1000,Vec(300.0,400.0),Vec(0.0,100.0),Vec(0.0,0.0))]
 ps.append(Planet(1,Vec(200.0,200.0),Vec(1000.0,0.0),Vec(0.0,0.0)))
 ps.append(Planet(1,Vec(350.9,450.0),Vec(1000.0,10.0),Vec(0.0,0.0)))

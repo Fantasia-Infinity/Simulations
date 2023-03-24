@@ -40,7 +40,7 @@ class Skin(classroom.Classroom):
         self.a=newskin.a
     def show(self):
         for i in self.a:
-            print map(showstate,i) 
+            print(map(showstate,i))
         return
 n=40
 c=Skin(n)
