@@ -252,7 +252,7 @@ class Ground:
                 self.uppergroundunit(i, j)
 
 
-n = 50
+n = 100
 g = Ground(n)
 g.randinit()
 for i in range(500):
