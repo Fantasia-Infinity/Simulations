@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Created on Wed May 03 14:03:42 2017
@@ -272,8 +271,8 @@ class Ground:
         self.decoposeC(x, y)
 
     def update(self):
-        l1 = range(self.n)
-        l2 = range(self.n)
+        l1 = list(range(self.n))
+        l2 = list(range(self.n))
         random.shuffle(l1)
         random.shuffle(l2)
         for i in l1:  # 因并不是严格的并行更新 所以打乱更新顺序防止瞬移的bug
