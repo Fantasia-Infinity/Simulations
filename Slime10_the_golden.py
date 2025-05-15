@@ -383,7 +383,7 @@ class Ground:
         for i in l1:#因并不是严格的并行更新 所以打乱更新顺序防止瞬移的bug
             for j in l2:
                 self.uppergroundunit(i,j)
-n=60
+n=200
 g=Ground(n)
 g.randinit()
 for i in range(300):
